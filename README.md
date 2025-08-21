@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Desafio Técnico | Guard - Gerenciador de Contatos 💂‍♂️
 
-## Getting Started
+![Capa](./images/cover.jpg)
 
-First, run the development server:
+## 🎯 Objetivo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Desenvolver 3 telas de um sistema web para **gestão de contatos em um marketplace**, baseado no design fornecido via Figma.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O sistema simula o **painel de controle de um vendedor**, onde é possível cadastrar, visualizar e gerenciar seus contatos.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Protótipo Figma**:
+  [https://www.figma.com/community/file/1426246785677931248](https://www.figma.com/community/file/1426246785677931248)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Prazo de entrega**:
+  4 dias a partir do recebimento.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📌 Requisitos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Funcionalidades obrigatórias
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+As seguintes telas e recursos devem ser implementados:
 
-## Deploy on Vercel
+1. **Tela de Login**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   - Autenticação com e-mail e senha.
+   - Validação de campos.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Tela de Listagem de Contatos**
+
+   - Exibe todos os contatos cadastrados.
+   - Permite filtro por letra inicial do nome.
+   - Contatos exibidos com foto, nome, telefone e e-mail.
+
+3. **Tela de Cadastro de Contato**
+
+   - Upload de foto do contato.
+   - Campos para nome, telefone, e-mail.
+   - Botões para **Salvar** ou **Cancelar**.
+
+4. **Backend Funcional**
+
+   - Deve suportar o armazenamento de usuários, autenticação, contatos e seus atributos.
+
+5. **Banco de dados**
+
+   - PostgreSQL ou MongoDB (ou outro de sua escolha, se bem justificado).
+
+6. **Mensagem secreta**
+
+   - Ao manter o mouse sobre o botão “Adicionar contato” por 7 segundos, surge um tooltip especial:
+     `“Tá esperando o quê? Boraa moeer!! 🚀”`
+
+---
+
+### Diferenciais (opcionais, mas recomendados)
+
+1. **Deploy**
+
+   - Publique o front-end (ex: Vercel) e o back-end (ex: Render) se possível.
+   - Inclua os links no README.
+
+2. **Documentação**
+
+   - Explique a estrutura do projeto, como executar, e decisões técnicas.
+
+3. **Testes automatizados**
+
+   - Testes simples de integração (API) e/ou de componentes (UI).
+
+4. **Diagrama ERD**
+
+   - Um pequeno diagrama mostrando entidades e relações (usuários, contatos, atributos).
+
+---
+
+## 🛠️ Stacks recomendadas
+
+Você pode usar qualquer tecnologia, mas sugerimos:
+
+- **Frontend**: Next.js ou React (web)
+- **Backend**: FastAPI ou NestJS
+- **Banco de dados**: PostgreSQL ou MongoDB
+
+---
+
+## 📦 Entregáveis
+
+1. **Repositório com o código-fonte**
+
+   - GitHub, GitLab ou Bitbucket.
+
+2. **Instruções de execução**
+
+   - Como rodar o frontend e backend localmente.
+   - Se possível, um script ou Docker.
+
+3. **Demonstração visual**
+
+   - Imagens ou vídeo da aplicação em funcionamento.
+
+4. **(Opcional) Link do Deploy**
+
+   - Front e/ou back publicado.
+
+---
+
+## 🔍 O que será avaliado
+
+- Organização e clareza do código
+- Estrutura do projeto
+- Boas práticas de autenticação e manipulação de dados
+- UX simples e funcional
+- Atenção aos detalhes (como a mensagem secreta 👀)
+
+---
+
+## 📩 Dúvidas?
+
+Se tiver qualquer dúvida durante o desafio, envie uma mensagem. Estamos aqui para ajudar. Boa sorte e...
+**Boraa moeer!! 🔥🚀**
