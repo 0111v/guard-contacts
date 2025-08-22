@@ -5,7 +5,7 @@ interface ContactModalProps {
   isOpen: boolean
   onClose: () => void
   onSave: (data: CreateContactInput | UpdateContactInput) => Promise<void>
-  contact?: Contact | null // For editing existing contact
+  contact?: Contact | null // for editing existing contact
   loading?: boolean
 }
 
@@ -14,25 +14,27 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [photo, setPhoto] = useState<File | null>(null)
+  const [currentPhotoUrl, setCurrentPhotoUrl] = useState<string | null>(null)
 
-  // Secret tooltip state
+  // secret tooltip
   const [showSecretTooltip, setShowSecretTooltip] = useState(false)
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Reset form when modal opens/closes or contact changes
   useEffect(() => {
     if (isOpen && contact) {
-      // Editing mode - populate form
+      // editing mode
       setName(contact.name)
       setEmail(contact.email || '')
       setPhone(contact.phone || '')
-      setPhoto(null)
+      setPhoto(null) 
+      setCurrentPhotoUrl(contact.photo_url || null)
     } else if (isOpen) {
-      // Adding mode - clear form
+      // creating mode
       setName('')
       setEmail('')
       setPhone('')
       setPhoto(null)
+      setCurrentPhotoUrl(null)
     }
   }, [isOpen, contact])
 
@@ -51,7 +53,6 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
     setShowSecretTooltip(false)
   }
 
-  // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
       if (hoverTimeoutRef.current) {
@@ -65,7 +66,7 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
 
     try {
       if (contact) {
-        // Update existing contact
+        // update existing contact
         await onSave({
           name: name.trim(),
           email: email.trim() || undefined,
@@ -73,7 +74,7 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
           photo: photo || undefined,
         })
       } else {
-        // Create new contact
+        // create new contact
         await onSave({
           name: name.trim(),
           email: email.trim() || undefined,
@@ -100,7 +101,7 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-background-primary rounded-lg shadow-xl border border-background-secondary max-w-md w-full m-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-background-primary rounded-lg shadow-xl border border-background-secondary max-w-md w-full m-4 max-h-[90vh] overflow-y-visible ">
         {/* Modal Header */}
         <div className="flex justify-between items-center p-6 border-b border-background-secondary">
           <h2 className="text-heading text-content-primary">
@@ -116,6 +117,44 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
 
         {/* Modal Content */}
         <div className="p-6">
+          {/* Photo Section */}
+          <div className="flex flex-col items-center gap-4 mb-6">
+            {/* Photo Preview */}
+            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-accent bg-background-secondary flex items-center justify-center">
+              {currentPhotoUrl && !photo ? (
+                <img 
+                  src={currentPhotoUrl} 
+                  alt={name || 'Contact photo'}
+                  className="w-full h-full object-cover"
+                />
+              ) : photo ? (
+                <img 
+                  src={URL.createObjectURL(photo)} 
+                  alt="New photo preview"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="text-content-muted text-2xl">👤</div>
+              )}
+            </div>
+            
+            {/* File Input Button */}
+            <div className="relative">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setPhoto(e.target.files?.[0] || null)}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+              <button
+                type="button"
+                className="px-4 py-2 text-accent text-text-small hover:text-accent/80 transition-colors"
+              >
+                + Adicionar foto
+              </button>
+            </div>
+          </div>
+          
           <div className="grid grid-cols-1 gap-4 mb-6">
             <input
               type="text"
@@ -138,17 +177,6 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
               onChange={(e) => setPhone(e.target.value)}
               className="px-4 py-3 bg-background-secondary border border-background-secondary rounded-lg text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
             />
-            <div className="relative">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => setPhoto(e.target.files?.[0] || null)}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              />
-              <div className="px-4 py-3 bg-background-secondary border border-background-secondary rounded-lg text-content-muted cursor-pointer hover:border-accent transition-colors">
-                {photo ? `📸 ${photo.name}` : '📷 Escolher foto...'}
-              </div>
-            </div>
           </div>
           
           {photo && (
@@ -172,7 +200,7 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
                 disabled={loading || !name.trim()}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className="bg-accent text-background-primary px-6 py-3 rounded-lg font-medium hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="bg-accent-brand text-background-primary px-6 py-3 rounded-lg font-medium hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {loading ? 'Salvando...' : contact ? 'Atualizar Contato' : 'Adicionar Contato'}
               </button>
@@ -180,7 +208,7 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
               {/* Secret Tooltip */}
               {showSecretTooltip && (
                 <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-background-primary border border-accent rounded-lg shadow-lg text-content-primary text-text-small whitespace-nowrap animate-pulse">
-                  🎉 Você encontrou o easter egg! Parabéns pela paciência!
+                  “Tá esperando o quê? Boraa moeer!! 🚀”
                   <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-accent"></div>
                 </div>
               )}
