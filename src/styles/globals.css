@@ -47,6 +47,18 @@
   --font-sans: var(--font-schibsted);
 }
 
+/* Hide scrollbar utility */
+@layer utilities {
+  .scrollbar-hide {
+    /* Firefox */
+    scrollbar-width: none;
+    /* Safari and Chrome */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
 /* Global styles */
 body {
   background-color: var(--color-background-primary);

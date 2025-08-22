@@ -17,9 +17,9 @@ export function AlphabetFilter({ currentFilter, onFilterChange }: AlphabetFilter
   }
 
   return (
-    <div className="w-20 border-r border-background-secondary p-4">
+    <div className="w-20 border-r border-background-secondary p-4 flex flex-col">
       <div className="text-content-muted text-text-small mb-4">Filter</div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 flex-1 overflow-y-auto scrollbar-hide">
         {letters.map((letter) => (
           <button
             key={letter}
@@ -37,7 +37,7 @@ export function AlphabetFilter({ currentFilter, onFilterChange }: AlphabetFilter
           onClick={handleAllClick}
           className={`w-8 h-8 text-text-small rounded hover:bg-background-secondary transition-colors mt-2 ${
             currentFilter === ''
-              ? 'bg-accent text-background-primary font-medium'
+              ? 'bg-accent text-content-muted font-medium'
               : 'text-content-muted hover:text-content-primary'
           }`}
         >
