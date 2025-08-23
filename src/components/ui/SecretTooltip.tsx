@@ -47,7 +47,7 @@ export function SecretTooltip({
       {/* Secret Tooltip */}
       {showTooltip && (
         <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 px-3 py-2 bg-background-primary border border-accent rounded-lg shadow-lg text-content-primary text-text-small whitespace-nowrap animate-pulse">
-          "{message}"
+          {`${message}`}
         </div>
       )}
     </div>

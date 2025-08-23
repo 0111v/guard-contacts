@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Contact, CreateContactInput, UpdateContactInput } from '../../types/contact'
 import { ContactAvatar } from './ContactAvatar'
 import { AccountIcon } from '../icons/AccountIcon'
@@ -16,7 +16,6 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [photo, setPhoto] = useState<File | null>(null)
-  const [currentPhotoUrl, setCurrentPhotoUrl] = useState<string | null>(null)
   const [nameError, setNameError] = useState('')
 
 
@@ -26,17 +25,19 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
       setName(contact.name)
       setEmail(contact.email || '')
       setPhone(contact.phone || '')
-      setPhoto(null) 
-      setCurrentPhotoUrl(contact.photo_url || null)
+      setPhoto(null)
     } else if (isOpen) {
       // creating mode
       setName('')
       setEmail('')
       setPhone('')
       setPhoto(null)
-      setCurrentPhotoUrl(null)
     }
   }, [isOpen, contact])
+
+  const handleClose = useCallback(() => {
+    onClose()
+  }, [onClose])
 
   // ESC key handler
   useEffect(() => {
@@ -48,7 +49,7 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
 
     document.addEventListener('keydown', handleEscKey)
     return () => document.removeEventListener('keydown', handleEscKey)
-  }, [isOpen])
+  }, [isOpen, handleClose])
 
   const handleSubmit = async () => {
     // Clear previous error
@@ -82,10 +83,6 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
     } catch (error) {
       console.error('Error saving contact:', error)
     }
-  }
-
-  const handleClose = () => {
-    onClose()
   }
 
   if (!isOpen) return null
