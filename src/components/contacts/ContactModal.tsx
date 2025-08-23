@@ -17,6 +17,7 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
   const [phone, setPhone] = useState('')
   const [photo, setPhoto] = useState<File | null>(null)
   const [currentPhotoUrl, setCurrentPhotoUrl] = useState<string | null>(null)
+  const [nameError, setNameError] = useState('')
 
 
   useEffect(() => {
@@ -38,7 +39,14 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
   }, [isOpen, contact])
 
   const handleSubmit = async () => {
-    if (!name.trim()) return
+    // Clear previous error
+    setNameError('')
+    
+    // Validate name
+    if (!name.trim()) {
+      setNameError('Nome é obrigatório')
+      return
+    }
 
     try {
       if (contact) {
@@ -128,9 +136,17 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
                 type="text"
                 placeholder="Nome do contato"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 bg-background-secondary border border-background-secondary rounded-lg text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                onChange={(e) => {
+                  setName(e.target.value)
+                  if (nameError) setNameError('') // Clear error when typing
+                }}
+                className={`w-full px-4 py-3 bg-background-secondary border rounded-lg text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent ${
+                  nameError ? 'border-accent-red' : 'border-background-secondary'
+                }`}
               />
+              {nameError && (
+                <p className="mt-1 text-text-small text-accent-red">{nameError}</p>
+              )}
             </div>
                         
             <div>
@@ -179,7 +195,7 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
             </button>
             <button
               onClick={handleSubmit}
-              disabled={loading || !name.trim()}
+              disabled={loading}
               className="bg-accent-brand text-background-primary px-6 py-3 rounded-lg font-medium hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {loading ? 'Salvando...' : 'Salvar'}
