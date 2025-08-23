@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors from Cores.png */
+  --color-background-primary: #111111;
+  --color-background-secondary: #1B1B1B;
+  --color-background-tertiary: #303030;
+  
+  --color-border-primary: #FFFFFF;
+  
+  --color-content-primary: #FFFFFF;
+  --color-content-body: #E2E2E2;
+  --color-content-heading: #C6C6C6;
+  --color-content-muted: #5E5E5E;
+  --color-content-placeholder: #777777;
+  --color-content-inverse: #111111;
+  
+  --color-accent-brand: #C4F120;
+  --color-accent-red: #E61E32;
+  
+  /* Typography from Tipografia.png */
+  --font-schibsted: "Schibsted Grotesk", sans-serif;
+  
+  /* Font sizes mapped to Tailwind utilities */
+  --text-heading: 24px;
+  --text-text-large: 16px;
+  --text-text-medium: 14px;
+  --text-text-small: 12px;
+  --text-text-xsmall: 10px;
+  --text-label-medium: 14px;
+  --text-label-small: 12px;
+  
+  /* Default font family */
+  --font-sans: var(--font-schibsted);
+}
+
+/* Hide scrollbar utility */
+@layer utilities {
+  .scrollbar-hide {
+    /* Firefox */
+    scrollbar-width: none;
+    /* Safari and Chrome */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+/* Global styles */
+body {
+  background-color: var(--color-background-primary);
+  color: var(--color-content-primary);
+  font-family: var(--font-sans);
+  /* font-size: var(--text-text-medium); */
+  line-height: var(--line-height-text-medium);
+}
