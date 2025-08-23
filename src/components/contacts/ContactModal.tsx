@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Contact, CreateContactInput, UpdateContactInput } from '../../types/contact'
+import { ContactAvatar } from './ContactAvatar'
+import { AccountIcon } from '../icons/AccountIcon'
 
 interface ContactModalProps {
   isOpen: boolean
@@ -16,9 +18,6 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
   const [photo, setPhoto] = useState<File | null>(null)
   const [currentPhotoUrl, setCurrentPhotoUrl] = useState<string | null>(null)
 
-  // secret tooltip
-  const [showSecretTooltip, setShowSecretTooltip] = useState(false)
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     if (isOpen && contact) {
@@ -37,29 +36,6 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
       setCurrentPhotoUrl(null)
     }
   }, [isOpen, contact])
-
-  // Secret tooltip handlers
-  const handleMouseEnter = () => {
-    hoverTimeoutRef.current = setTimeout(() => {
-      setShowSecretTooltip(true)
-    }, 7000) // 7 seconds
-  }
-
-  const handleMouseLeave = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-      hoverTimeoutRef.current = null
-    }
-    setShowSecretTooltip(false)
-  }
-
-  useEffect(() => {
-    return () => {
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current)
-      }
-    }
-  }, [])
 
   const handleSubmit = async () => {
     if (!name.trim()) return
@@ -89,11 +65,6 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
   }
 
   const handleClose = () => {
-    setShowSecretTooltip(false)
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-      hoverTimeoutRef.current = null
-    }
     onClose()
   }
 
@@ -120,23 +91,15 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
           {/* Photo Section */}
           <div className="flex flex-col items-center gap-4 mb-6">
             {/* Photo Preview */}
-            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-accent bg-background-secondary flex items-center justify-center">
-              {currentPhotoUrl && !photo ? (
-                <img 
-                  src={currentPhotoUrl} 
-                  alt={name || 'Contact photo'}
-                  className="w-full h-full object-cover"
-                />
-              ) : photo ? (
-                <img 
-                  src={URL.createObjectURL(photo)} 
-                  alt="New photo preview"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="text-content-muted text-2xl">👤</div>
-              )}
-            </div>
+            {/* <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-accent bg-background-secondary flex items-center justify-center"> */}
+              <ContactAvatar 
+                photo_url={photo ? URL.createObjectURL(photo) : contact?.photo_url}
+                name={name || contact?.name}
+                size='lg'
+                className='mt-4'
+                fallback={<AccountIcon className="w-8 h-8 text-content-muted" />}
+              />
+            {/* </div> */}
             
             {/* File Input Button */}
             <div className="relative">
@@ -148,7 +111,7 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
               />
               <button
                 type="button"
-                className="px-4 py-2 text-accent text-text-small hover:text-accent/80 transition-colors"
+                className="px-4 py-2 rounded-lg border-1 border-background-tertiary text-accent text-text-small hover:text-accent/80 transition-colors"
               >
                 + Adicionar foto
               </button>
@@ -156,27 +119,47 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
           </div>
           
           <div className="grid grid-cols-1 gap-4 mb-6">
-            <input
-              type="text"
-              placeholder="Nome *"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="px-4 py-3 bg-background-secondary border border-background-secondary rounded-lg text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="px-4 py-3 bg-background-secondary border border-background-secondary rounded-lg text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-            />
-            <input
-              type="tel"
-              placeholder="Telefone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="px-4 py-3 bg-background-secondary border border-background-secondary rounded-lg text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-            />
+            <div>
+              <label htmlFor="name" className="block text-content-primary text-text-medium font-medium mb-2">
+                Nome
+              </label>
+              <input
+                id="name"
+                type="text"
+                placeholder="Nome do contato"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-4 py-3 bg-background-secondary border border-background-secondary rounded-lg text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              />
+            </div>
+                        
+            <div>
+              <label htmlFor="phone" className="block text-content-primary text-text-medium font-medium mb-2">
+                Telefone
+              </label>
+              <input
+                id="phone"
+                type="tel"
+                placeholder="Número de telefone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full px-4 py-3 bg-background-secondary border border-background-secondary rounded-lg text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              />
+            </div>
+
+                        <div>
+              <label htmlFor="email" className="block text-content-primary text-text-medium font-medium mb-2">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                placeholder="Email do contato"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 bg-background-secondary border border-background-secondary rounded-lg text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              />
+            </div>
           </div>
           
           {photo && (
@@ -186,33 +169,21 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
           )}
 
           {/* Modal Actions */}
-          <div className="flex gap-3 justify-end">
+          <div className="flex gap-3 justify-end pt-5 border-t border-background-secondary">
             <button
               onClick={handleClose}
               disabled={loading}
-              className="bg-background-secondary text-content-muted px-6 py-3 rounded-lg font-medium hover:bg-background-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="bg-background-secondary text-content-primary px-6 py-3 rounded-lg font-medium hover:bg-background-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Cancelar
             </button>
-            <div className="relative">
-              <button
-                onClick={handleSubmit}
-                disabled={loading || !name.trim()}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                className="bg-accent-brand text-background-primary px-6 py-3 rounded-lg font-medium hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                {loading ? 'Salvando...' : contact ? 'Atualizar Contato' : 'Adicionar Contato'}
-              </button>
-              
-              {/* Secret Tooltip */}
-              {showSecretTooltip && (
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-background-primary border border-accent rounded-lg shadow-lg text-content-primary text-text-small whitespace-nowrap animate-pulse">
-                  “Tá esperando o quê? Boraa moeer!! 🚀”
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-accent"></div>
-                </div>
-              )}
-            </div>
+            <button
+              onClick={handleSubmit}
+              disabled={loading || !name.trim()}
+              className="bg-accent-brand text-background-primary px-6 py-3 rounded-lg font-medium hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {loading ? 'Salvando...' : 'Salvar'}
+            </button>
           </div>
         </div>
       </div>

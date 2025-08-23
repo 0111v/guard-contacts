@@ -1,6 +1,7 @@
 import { Contact } from '../../types/contact'
 import { EditIcon } from '../icons/EditIcon'
 import { DeleteIcon } from '../icons/DeleteIcon'
+import { ContactAvatar } from './ContactAvatar'
 
 interface ContactListProps {
   contacts: Contact[]
@@ -47,17 +48,11 @@ export function ContactList({ contacts, loading = false, onEdit, onDelete, class
             <div className="absolute bottom-0 left-4 right-1 h-px bg-background-tertiary"></div>
             {/* Avatar */}
             <div className="flex items-center ml-2">
-              {contact.photo_url ? (
-                <img 
-                  src={contact.photo_url} 
-                  alt={contact.name}
-                  className="w-14 h-14 rounded-xl object-cover"
-                />
-              ) : (
-                <div className="w-14 h-14 rounded-xl bg-content-muted flex items-center justify-center text-background-primary font-medium text-text-small">
-                  {contact.name.charAt(0).toUpperCase()}
-                </div>
-              )}
+              <ContactAvatar 
+                photo_url={contact.photo_url}
+                name={contact.name}
+                size="lg"
+              />
             </div>
             
             {/* Name */}

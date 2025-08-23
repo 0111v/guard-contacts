@@ -9,6 +9,7 @@ import { ContactList } from '../components/contacts/ContactList'
 import { ContactModal } from '../components/contacts/ContactModal'
 import { AlphabetFilter } from '../components/contacts/AlphabetFilter'
 import { Sidebar } from '../components/layout/Sidebar'
+import { SecretTooltip } from '../components/ui/SecretTooltip'
 
 export default function Home() {
   const { user, logout } = useAuthStore()
@@ -108,13 +109,15 @@ export default function Home() {
               
                   {/* Add Contact Button */}
                   <div className="mb-6">
-                    <button
-                      onClick={handleAddContact}
-                      className="bg-background-tertiary text-white px-6 py-3 rounded-xl font-medium hover:bg-accent/90 transition-colors flex items-center gap-2"
-                    >
-                      <span>+</span>
-                      Adicionar Contato
-                    </button>
+                    <SecretTooltip>
+                      <button
+                        onClick={handleAddContact}
+                        className="bg-background-tertiary text-white px-6 py-3 rounded-xl font-medium hover:bg-accent/90 transition-colors flex items-center gap-2"
+                      >
+                        <span>+</span>
+                        Adicionar Contato
+                      </button>
+                    </SecretTooltip>
                   </div>
                 </div>
               </div>
