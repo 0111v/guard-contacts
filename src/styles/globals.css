@@ -21,27 +21,14 @@
   /* Typography from Tipografia.png */
   --font-schibsted: "Schibsted Grotesk", sans-serif;
   
-  /* Font sizes with line heights */
-  --font-size-heading: 24px;
-  --line-height-heading: 32px;
-  
-  --font-size-text-large: 16px;
-  --line-height-text-large: 24px;
-  
-  --font-size-text-medium: 14px;
-  --line-height-text-medium: 22px;
-  
-  --font-size-text-small: 12px;
-  --line-height-text-small: 20px;
-  
-  --font-size-text-xsmall: 10px;
-  --line-height-text-xsmall: 14px;
-  
-  --font-size-label-medium: 14px;
-  --line-height-label-medium: 22px;
-  
-  --font-size-label-small: 12px;
-  --line-height-label-small: 20px;
+  /* Font sizes mapped to Tailwind utilities */
+  --text-heading: 24px;
+  --text-text-large: 16px;
+  --text-text-medium: 14px;
+  --text-text-small: 12px;
+  --text-text-xsmall: 10px;
+  --text-label-medium: 14px;
+  --text-label-small: 12px;
   
   /* Default font family */
   --font-sans: var(--font-schibsted);
@@ -64,6 +51,6 @@ body {
   background-color: var(--color-background-primary);
   color: var(--color-content-primary);
   font-family: var(--font-sans);
-  font-size: var(--font-size-text-medium);
+  /* font-size: var(--text-text-medium); */
   line-height: var(--line-height-text-medium);
 }
