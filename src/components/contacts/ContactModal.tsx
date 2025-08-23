@@ -38,6 +38,18 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
     }
   }, [isOpen, contact])
 
+  // ESC key handler
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) {
+        handleClose()
+      }
+    }
+
+    document.addEventListener('keydown', handleEscKey)
+    return () => document.removeEventListener('keydown', handleEscKey)
+  }, [isOpen])
+
   const handleSubmit = async () => {
     // Clear previous error
     setNameError('')
@@ -103,9 +115,9 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
               <ContactAvatar 
                 photo_url={photo ? URL.createObjectURL(photo) : contact?.photo_url}
                 name={name || contact?.name}
-                size='lg'
+                size='xl'
                 className='mt-4'
-                fallback={<AccountIcon className="w-8 h-8 text-content-muted" />}
+                fallback={<AccountIcon className="w-12 h-12 text-content-muted" />}
               />
             {/* </div> */}
             
@@ -189,14 +201,14 @@ export function ContactModal({ isOpen, onClose, onSave, contact, loading = false
             <button
               onClick={handleClose}
               disabled={loading}
-              className="bg-background-secondary text-content-primary px-6 py-3 rounded-lg font-medium hover:bg-background-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="bg-background-tertiary text-content-primary px-4 py-2.5 rounded-lg font-medium hover:bg-background-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Cancelar
             </button>
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="bg-accent-brand text-background-primary px-6 py-3 rounded-lg font-medium hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="bg-accent-brand text-background-primary px-4 py-2.5 rounded-lg font-medium hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {loading ? 'Salvando...' : 'Salvar'}
             </button>
