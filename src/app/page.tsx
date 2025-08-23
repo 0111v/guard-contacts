@@ -110,7 +110,7 @@ export default function Home() {
                   <div className="mb-6">
                     <button
                       onClick={handleAddContact}
-                      className="bg-background-tertiary text-white px-6 py-3 rounded-lg font-medium hover:bg-accent/90 transition-colors flex items-center gap-2"
+                      className="bg-background-tertiary text-white px-6 py-3 rounded-xl font-medium hover:bg-accent/90 transition-colors flex items-center gap-2"
                     >
                       <span>+</span>
                       Adicionar Contato
