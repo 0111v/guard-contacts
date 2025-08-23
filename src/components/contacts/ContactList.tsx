@@ -13,7 +13,7 @@ interface ContactListProps {
 export function ContactList({ contacts, loading = false, onEdit, onDelete, className = '' }: ContactListProps) {
   if (loading && contacts.length === 0) {
     return (
-      <div className="bg-background-primary rounded-lg p-8 text-center">
+      <div className=" p-12 text-center">
         <p className="text-content-muted">Carregando contatos...</p>
       </div>
     )
@@ -21,7 +21,7 @@ export function ContactList({ contacts, loading = false, onEdit, onDelete, class
 
   if (contacts.length === 0) {
     return (
-      <div className="bg-background-primary rounded-lg p-8 text-center">
+      <div className="p-12 text-center">
         <p className="text-content-muted">Nenhum contato encontrado.</p>
       </div>
     )
