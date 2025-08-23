@@ -29,8 +29,10 @@ export function ContactList({ contacts, loading = false, onEdit, onDelete, class
 
   return (
     <div className={`bg-background-secondary rounded-lg p-4 ${className}`}>
+      <div className='pb-7'></div>
+      <div className='h-px bg-background-tertiary'></div>
       {/* Table Header */}
-      <div className="grid grid-cols-[60px_1fr_1fr_1fr_130px] gap-4 p-4 text-content-muted text-text-small font-medium">
+      <div className="mt-7 grid grid-cols-[60px_1fr_1fr_1fr_130px] gap-4 p-4 text-content-muted text-text-small font-medium">
         <div>NOME</div>
         <div></div>
         <div>TELEFONE</div>
@@ -39,7 +41,7 @@ export function ContactList({ contacts, loading = false, onEdit, onDelete, class
       </div>
       
       {/* Table Rows */}
-      <div className='overflow-y-auto scrollbar-hide max-h-[55vh]'>
+      <div className='overflow-y-auto scrollbar-hide max-h-[52vh]'>
         {contacts.map((contact) => (
           <div key={contact.id} className="grid grid-cols-[80px_1fr_1fr_1fr_130px] gap-4 p-4 hover:bg-background-secondary/50 transition-colors relative">
             <div className="absolute bottom-0 left-4 right-1 h-px bg-background-tertiary"></div>

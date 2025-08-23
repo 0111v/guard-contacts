@@ -17,7 +17,7 @@ export function AlphabetFilter({ currentFilter, onFilterChange }: AlphabetFilter
   }
 
   return (
-    <div className="w-15 bg-accent-brand rounded-3xl flex flex-col items-center h-full max-h-[60vh]">
+    <div className="w-15 bg-accent-brand rounded-3xl flex flex-col items-center h-full max-h-[65vh]">
       {/* <div className="text-content-muted text-text-small mb-4">Filter</div> */}
       <div className="flex flex-col px-5 py-4 gap-1 flex-1 overflow-y-auto scrollbar-hide">
         {letters.map((letter) => (

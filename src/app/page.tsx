@@ -71,56 +71,52 @@ export default function Home() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-background-tertiary flex">
+      <div className="min-h-screen bg-background-primary flex">
         {/* Left Sidebar */}
         <Sidebar user={user} onLogout={handleLogout} />
 
         {/* Main Content Area */}
-        <div className="flex-1 bg-background-secondary flex items-center justify-start pl-6">
-          <div className="bg-background-primary rounded-lg shadow-lg border border-background-primary flex overflow-hidden max-h-[80vh] w-full max-w-[80vw]">
-            {/* Alphabet Filter Section */}
-            <AlphabetFilter 
-              currentFilter={filter}
-              onFilterChange={setFilter}
-            />
+        <div className="flex-1 bg-background-primary flex items-center justify-start">
+          <div className="bg-background-secondary rounded-4xl shadow-lg border border-background-primary flex overflow-hidden max-h-[80vh] w-full max-w-[80vw]">
 
             {/* Contact Content */}
-            <div className="flex-1 p-6">
-              {/* Header */}
-              <div className="flex justify-between items-center mb-6">
-                <h1 className="text-heading text-content-primary">Lista de contatos</h1>
-                <div className="flex items-center gap-4">
-                  <div className="text-content-muted text-text-small">
-                    {user?.email}
+            <div className="flex-1 p-10">
+              {/* Top Bar */}
+              <div className='flex justify-between'>
+                {/* Header */}
+                <div className="flex justify-between items-center mb-6">
+                  <h1 className="text-heading font-bold text-content-primary">Lista de contatos</h1>
+                </div>
+
+                {/* need a name for this part */}
+                <div className='flex gap-3'>
+                  {/* Search Input */}
+                  <div className="mb-6 relative rounded-xl border-2 border-background-tertiary">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                      <svg className="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Pesquisar"
+                      value={filter}
+                      onChange={(e) => setFilter(e.target.value)}
+                      className="w-100 pl-12 pr-4 py-2 text-left border border-background-secondary rounded-lg text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                    />
+                  </div>
+              
+                  {/* Add Contact Button */}
+                  <div className="mb-6">
+                    <button
+                      onClick={handleAddContact}
+                      className="bg-background-tertiary text-white px-6 py-3 rounded-lg font-medium hover:bg-accent/90 transition-colors flex items-center gap-2"
+                    >
+                      <span>+</span>
+                      Adicionar Contato
+                    </button>
                   </div>
                 </div>
-              </div>
-          
-              {/* Search Input */}
-              <div className="mb-6 relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                  <svg className="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Pesquisar contatos..."
-                  value={filter}
-                  onChange={(e) => setFilter(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-background-primary border border-background-secondary rounded-lg text-content-primary placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-                />
-              </div>
-          
-              {/* Add Contact Button */}
-              <div className="mb-6">
-                <button
-                  onClick={handleAddContact}
-                  className="bg-accent text-white px-6 py-3 rounded-lg font-medium hover:bg-accent/90 transition-colors flex items-center gap-2"
-                >
-                  <span>+</span>
-                  Adicionar Contato
-                </button>
               </div>
 
               {/* Error Display */}
@@ -131,27 +127,35 @@ export default function Home() {
               )}
 
               {/* Contacts List */}
-              <div>
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-semibold">
+              <div className='flex items-start'>
+                <AlphabetFilter 
+                  currentFilter={filter}
+                  onFilterChange={setFilter}
+                />
+                <div className="flex-1">
+                {/* <div className="flex mb-4"> */}
+                  {/* <h2 className="text-xl font-semibold">
                     Contacts ({displayContacts.length}
                     {filter && ` of ${contacts.length}`})
-                  </h2>
-                  <button
+                  </h2> */}
+                  {/* <button
                     onClick={getContacts}
                     disabled={loading}
                     className="bg-gray-500 text-white px-4 py-2 rounded disabled:opacity-50"
                   >
                     {loading ? 'Loading...' : 'Refresh'}
-                  </button>
-                </div>
+                  </button> */}
+                {/* </div> */}
                 
                 <ContactList
                   contacts={displayContacts}
                   loading={loading}
                   onEdit={handleEditContact}
                   onDelete={handleDelete}
+                  className="mr-4 ml-8 "
                 />
+                </div>
+
               </div>
             </div>
           </div>
