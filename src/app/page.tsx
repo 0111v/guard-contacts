@@ -84,7 +84,7 @@ export default function Home() {
 
         {/* Main Content Area */}
         <div className="flex-1 bg-background-primary flex items-center justify-start">
-          <div className="bg-background-secondary rounded-4xl shadow-lg border border-background-primary flex overflow-hidden max-h-[80vh] w-full max-w-[80vw]">
+          <div className="bg-background-secondary rounded-4xl shadow-lg border border-background-primary flex lg:overflow-hidden max-h-[80vh] w-full max-w-[80vw] overflow-auto">
 
             {/* Contact Content */}
             <div className="flex-1 p-10">
