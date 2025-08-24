@@ -12,14 +12,16 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [isRegister, setIsRegister] = useState(false)
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false)
   
   const { user, loading, error, login, register, clearError } = useAuthStore()
   const router = useRouter()
 
-  // Password validation
+  // password validation
   const isPasswordLongEnough = password.length >= 8
   const hasNumberOrSymbol = /[0-9!@#$%^&*(),.?":{}|<>]/.test(password)
   const passwordsMatch = password === confirmPassword && confirmPassword !== ''
+  const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
   useEffect(() => {
     if (user) {
@@ -46,9 +48,9 @@ export default function LoginPage() {
         await login({ email: email.trim(), password })
       }
       
-      // Success - user will be redirected by useEffect
+      // success - user will be redirected by useEffect
     } catch (err) {
-      // Error is handled by the store
+      // error is handled by the store
     }
   }
 
@@ -58,11 +60,12 @@ export default function LoginPage() {
     setEmail('')
     setPassword('')
     setConfirmPassword('')
+    setHasAttemptedSubmit(false)
   }
 
   return (
     <div className='flex min-h-screen'>
-      {/* Left side - Background image (60%) */}
+      {/* left side */}
       <div
         className="flex-[3] relative overflow-hidden"
         style={{
@@ -75,18 +78,18 @@ export default function LoginPage() {
         {/* blur effect */}
         <div className="absolute inset-0 bg-black/10 backdrop-blur-xl"></div>
         
-        {/* Logo - above blur layer */}
+        {/* logo */}
         <div className="flex items-center justify-center gap-4 absolute top-12 left-24 z-10">
           <LogoIcon className='w-10 h-10 text-accent-brand'/>
           <span className='text-4xl font-bold'>GUARD</span>
         </div>
       </div>
       
-      {/* Right side - Form (40%) */}
+      {/* right side */}
       <div className="flex-[2] flex items-center justify-center bg-background-secondary relative">
-        {/* "Don't have account" link - top right */}
+        {/* don't have account link */}
         <div className="absolute top-8 right-8 z-10">
-          <span className='mr-2 text-text-medium1'>{isRegister ? 'Já tem uma conta?' : 'Não tem uma conta?'}</span>
+          <span className='mr-2 text-text-medium'>{isRegister ? 'Já tem uma conta?' : 'Não tem uma conta?'}</span>
           <button
             type="button"
             onClick={toggleMode}
@@ -98,7 +101,7 @@ export default function LoginPage() {
           </button>
         </div>
         
-        {/* Main form - centered */}
+        {/* main form */}
         <div className="w-full max-w-md space-y-8 p-8">
           <div>
             <h2 className="text-3xl font-extrabold text-content-primary">
@@ -148,6 +151,11 @@ export default function LoginPage() {
                   className="mt-1 block w-full px-4 py-2 border border-content-muted rounded-md shadow-sm focus:outline-none focus:ring-accent-brand focus:border-accent-brand placeholder:text-sm"
                   placeholder="Digite seu email"
                 />
+                {hasAttemptedSubmit && email && !emailCheck && (
+                  <p className="mt-1 text-sm text-red-600">
+                    Por favor, digite um email válido
+                  </p>
+                )}
               </div>
               
               <div>
@@ -215,6 +223,7 @@ export default function LoginPage() {
             <div className='flex justify-end'>
               <button
                 type="submit"
+                onClick={() => setHasAttemptedSubmit(true)}
                 disabled={loading || !email.trim() || !password.trim() || (isRegister && (!name.trim() || !isPasswordLongEnough || !hasNumberOrSymbol || !passwordsMatch))}
                 className="flex justify-center py-3 px-4 border border-transparent text-text-medium font-medium rounded-lg text-background-primary bg-accent-brand hover:brightness-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-brand disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
