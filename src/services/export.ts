@@ -1,5 +1,5 @@
 const API_BASE = process.env.NODE_ENV === 'production' 
-  ? 'https://your-vercel-url.vercel.app/api'  // Update this with your actual Vercel URL
+  ? '/api'  // Use relative URL - works on any domain
   : 'http://localhost:3000/api'
 
 export const exportService = {
