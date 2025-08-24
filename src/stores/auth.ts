@@ -31,7 +31,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       // user will be set by the auth state change listener
     } catch (error) {
       set({ 
-        error: error instanceof Error ? error.message : 'Failed to login',
+        error: error instanceof Error ? error.message : 'Falha ao fazer login',
         loading: false 
       })
     }
@@ -45,7 +45,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       // user will be set by the auth state change listener
     } catch (error) {
       set({ 
-        error: error instanceof Error ? error.message : 'Failed to register',
+        error: error instanceof Error ? error.message : 'Falha ao registrar',
         loading: false 
       })
     }
@@ -59,7 +59,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       // user will be set to null by the auth state change listener
     } catch (error) {
       set({ 
-        error: error instanceof Error ? error.message : 'Failed to logout',
+        error: error instanceof Error ? error.message : 'Falha ao sair',
         loading: false 
       })
     }
@@ -87,7 +87,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
     } catch (error) {
       set({ 
-        error: error instanceof Error ? error.message : 'Failed to initialize auth',
+        error: error instanceof Error ? error.message : 'Falha ao inicializar autenticação',
         loading: false,
         initialized: true
       })

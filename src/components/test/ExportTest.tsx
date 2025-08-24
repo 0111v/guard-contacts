@@ -19,7 +19,7 @@ export function ExportTest() {
       setIsReady(result.isReady)
       setWarmUpMessage(result.message)
     } catch {
-      setWarmUpMessage('Failed to warm up server')
+      setWarmUpMessage('Falha ao aquecer servidor')
     } finally {
       setIsWarming(false)
     }
@@ -43,7 +43,7 @@ export function ExportTest() {
       
     } catch (error) {
       console.error('Download failed:', error)
-      alert('Download failed! Check console for details.')
+      alert('Falha no download! Verifique o console para detalhes.')
     } finally {
       setIsExporting(false)
     }
@@ -51,7 +51,7 @@ export function ExportTest() {
 
   const handleEmailExport = async () => {
     if (!email.trim()) {
-      alert('Please enter an email address')
+      alert('Por favor, insira um endereço de email')
       return
     }
     
@@ -62,7 +62,7 @@ export function ExportTest() {
       alert(result.message)
     } catch (error) {
       console.error('Email export failed:', error)
-      alert('Email export failed! Check console for details.')
+      alert('Falha no envio de email! Verifique o console para detalhes.')
     } finally {
       setIsExporting(false)
     }

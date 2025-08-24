@@ -56,12 +56,12 @@ export default function Home() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this contact?')) return
+    if (!confirm('Tem certeza que deseja excluir este contato?')) return
     await removeContact(id)
   }
 
   const handleLogout = async () => {
-    if (confirm('Are you sure you want to logout?')) {
+    if (confirm('Tem certeza que deseja sair?')) {
       await logout()
     }
   }
@@ -84,7 +84,7 @@ export default function Home() {
 
         {/* Main Content Area */}
         <div className="flex-1 bg-background-primary flex items-center justify-start">
-          <div className="bg-background-secondary rounded-4xl shadow-lg border border-background-primary flex overflow-hidden max-h-[80vh] w-full max-w-[80vw]">
+          <div className="bg-background-secondary rounded-4xl shadow-lg border border-background-primary flex lg:overflow-hidden max-h-[80vh] w-full max-w-[80vw] overflow-auto">
 
             {/* Contact Content */}
             <div className="flex-1 p-10">
@@ -117,7 +117,7 @@ export default function Home() {
                   <div className="mb-6">
                     <button
                       onClick={handleExportContacts}
-                      className="bg-green-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-green-700 transition-colors flex items-center gap-2"
+                      className="bg-green-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-green-700 transition-colors flex items-center gap-2 cursor-pointer"
                     >
                       <span>⬇</span>
                       Exportar CSV
@@ -129,7 +129,7 @@ export default function Home() {
                     <SecretTooltip>
                       <button
                         onClick={handleAddContact}
-                        className="bg-background-tertiary text-white px-6 py-3 rounded-xl font-medium hover:bg-accent/90 transition-colors flex items-center gap-2"
+                        className="bg-background-tertiary text-white px-6 py-3 rounded-xl font-medium hover:bg-accent/90 transition-colors flex items-center gap-2 cursor-pointer"
                       >
                         <span>+</span>
                         Adicionar Contato

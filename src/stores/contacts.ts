@@ -33,7 +33,7 @@ export const useContactsStore = create<ContactStore>((set, get) => ({
       set({ contacts: data })
     } catch (error) {
       set({ 
-        error: error instanceof Error ? error.message : 'Failed to fetch contacts', 
+        error: error instanceof Error ? error.message : 'Falha ao buscar contatos', 
       })
     } finally {
       set({ loading: false })
@@ -50,7 +50,7 @@ export const useContactsStore = create<ContactStore>((set, get) => ({
       }))
     } catch (error) {
       set({ 
-        error: error instanceof Error ? error.message : 'Failed to create contact',
+        error: error instanceof Error ? error.message : 'Falha ao criar contato',
       })
     } finally {
       set({ loading: false })
@@ -69,7 +69,7 @@ export const useContactsStore = create<ContactStore>((set, get) => ({
 
       return updatedContact
     } catch (error) {
-      set({ error: error instanceof Error ? error.message : 'Failed to edit contact' })
+      set({ error: error instanceof Error ? error.message : 'Falha ao editar contato' })
       return null
     } finally {
       set({ loading: false })
@@ -86,7 +86,7 @@ export const useContactsStore = create<ContactStore>((set, get) => ({
         contacts: state.contacts.filter(contact => contact.id !== id)
       }))
     } catch (error) {
-      set({ error: error instanceof Error ? error.message : 'Failed to delete contact' })
+      set({ error: error instanceof Error ? error.message : 'Falha ao excluir contato' })
     } finally {
       set({ loading: false })
     }

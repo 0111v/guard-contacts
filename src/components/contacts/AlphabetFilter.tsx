@@ -24,7 +24,7 @@ export function AlphabetFilter({ currentFilter, onFilterChange }: AlphabetFilter
           <button
             key={letter}
             onClick={() => handleLetterClick(letter)}
-            className={`w-8 h-8 p-1 text-text-large font-bold rounded hover:bg-background-secondary transition-all duration-300 ${
+            className={`w-8 h-8 p-1 text-text-large font-bold rounded hover:bg-background-secondary transition-all duration-300 cursor-pointer ${
               currentFilter.toLowerCase() === letter.toLowerCase()
                 ? 'bg-accent text-background-primary hover:text-content-primary my-2'
                 : 'text-content-muted hover:text-content-primary my-0'
@@ -39,7 +39,7 @@ export function AlphabetFilter({ currentFilter, onFilterChange }: AlphabetFilter
         ))}
         <button
           onClick={handleAllClick}
-          className={`w-8 h-8 text-text-small rounded hover:bg-background-secondary transition-colors mt-2 ${
+          className={`w-8 h-8 text-text-small rounded hover:bg-background-secondary transition-colors mt-2 cursor-pointer ${
             currentFilter === ''
               ? 'bg-accent text-content-muted font-medium'
               : 'text-content-muted hover:text-content-primary'

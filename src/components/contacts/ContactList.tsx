@@ -76,7 +76,7 @@ export function ContactList({ contacts, loading = false, onEdit, onDelete, class
                 <button
                   onClick={() => onEdit(contact)}
                   disabled={loading}
-                  className="flex items-center rounded-xl text-content-primary p-2 gap-1 border-2 border-background-tertiary hover:text-accent transition-colors disabled:opacity-50"
+                  className="flex items-center rounded-xl text-content-primary p-2 gap-1 border-2 border-background-tertiary hover:text-accent transition-colors disabled:opacity-50 cursor-pointer"
                   title="Editar contato"
                 >
                   <EditIcon className="w-5 h-5" /> <span>Editar</span>
@@ -86,7 +86,7 @@ export function ContactList({ contacts, loading = false, onEdit, onDelete, class
                 <button
                   onClick={() => onDelete(contact.id)}
                   disabled={loading}
-                  className="w-11 h-11 rounded-xl border-2 border-background-tertiary hover:text-red-400 transition-colors disabled:opacity-50"
+                  className="w-11 h-11 rounded-xl border-2 border-background-tertiary hover:text-red-400 transition-colors disabled:opacity-50 cursor-pointer"
                   title="Excluir contato"
                 >
                   <DeleteIcon className="w-10 h-10 text-content-primary" />
