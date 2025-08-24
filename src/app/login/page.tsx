@@ -119,13 +119,13 @@ export default function LoginPage() {
             <div className="space-y-4">
               {isRegister && (
                 <div>
-                  <label htmlFor="email" className="block text-text-large text-content-primary">
+                  <label htmlFor="name" className="block text-text-large text-content-primary">
                     Nome
                   </label>
                   <input
                     id="name"
                     name="name"
-                    type="name"
+                    type="text"
                     autoComplete="name"
                     required
                     value={name}
@@ -160,7 +160,7 @@ export default function LoginPage() {
               
               <div>
                 <label htmlFor="password" className="block text-text-large text-content-primary">
-                  Password
+                  Senha
                 </label>
                 <input
                   id="password"
