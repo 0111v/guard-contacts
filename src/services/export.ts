@@ -1,6 +1,7 @@
-const API_BASE = process.env.NODE_ENV === 'production' 
-  ? '/api'  // Use relative URL - works on any domain
-  : 'http://localhost:3000/api'
+// minimal change: add supabase import to grab the session token
+import { supabase } from '../../lib/supabase'  // adjust path if needed
+
+const API_BASE = '/api'  // Relative URL - works everywhere!
 
 export const exportService = {
   // Health check to warm up serverless function
@@ -8,16 +9,16 @@ export const exportService = {
     try {
       console.log('🔥 Warming up mini-server...')
       const startTime = Date.now()
-      
+
       const response = await fetch(`${API_BASE}/health`, {
         method: 'GET'
       })
-      
+
       const data = await response.json()
       const duration = Date.now() - startTime
-      
+
       console.log(`✅ Server warmed up in ${duration}ms`, data)
-      
+
       return {
         isReady: true,
         message: data.message
@@ -36,9 +37,14 @@ export const exportService = {
     try {
       console.log('📥 Starting CSV download...')
       const startTime = Date.now()
-      
+
+      // ⬇️ minimal: forward JWT
+      const { data: { session } } = await supabase.auth.getSession()
+      const token = session?.access_token
+
       const response = await fetch(`${API_BASE}/export-contacts`, {
-        method: 'GET'
+        method: 'GET',
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
       })
 
       if (!response.ok) {
@@ -47,10 +53,10 @@ export const exportService = {
 
       const blob = await response.blob()
       const duration = Date.now() - startTime
-      
+
       console.log(`✅ CSV generated in ${duration}ms`)
       return blob
-      
+
     } catch (error) {
       console.error('❌ Export failed:', error)
       throw error
@@ -62,10 +68,18 @@ export const exportService = {
     try {
       console.log(`📧 Sending export to ${email}...`)
       const startTime = Date.now()
-      
-      const response = await fetch(`${API_BASE}/export-contacts?email=${encodeURIComponent(email)}`, {
-        method: 'GET'
-      })
+
+      // ⬇️ minimal: forward JWT
+      const { data: { session } } = await supabase.auth.getSession()
+      const token = session?.access_token
+
+      const response = await fetch(
+        `${API_BASE}/export-contacts?email=${encodeURIComponent(email)}`,
+        {
+          method: 'GET',
+          headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+        }
+      )
 
       if (!response.ok) {
         throw new Error(`Email export failed: ${response.statusText}`)
@@ -73,10 +87,10 @@ export const exportService = {
 
       const data = await response.json()
       const duration = Date.now() - startTime
-      
+
       console.log(`✅ Email sent in ${duration}ms`)
       return data
-      
+
     } catch (error) {
       console.error('❌ Email export failed:', error)
       throw error
