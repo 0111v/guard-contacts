@@ -7,6 +7,7 @@ import { Contact, CreateContactInput, UpdateContactInput } from '../types/contac
 import { ProtectedRoute } from '../components/auth/ProtectedRoute'
 import { ContactList } from '../components/contacts/ContactList'
 import { ContactModal } from '../components/contacts/ContactModal'
+import { ExportModal } from '../components/contacts/ExportModal'
 import { AlphabetFilter } from '../components/contacts/AlphabetFilter'
 import { Sidebar } from '../components/layout/Sidebar'
 import { SecretTooltip } from '../components/ui/SecretTooltip'
@@ -29,6 +30,7 @@ export default function Home() {
 
   const [showContactModal, setShowContactModal] = useState(false)
   const [editingContact, setEditingContact] = useState<Contact | null>(null)
+  const [showExportModal, setShowExportModal] = useState(false)
 
   const handleAddContact = () => {
     setEditingContact(null)
@@ -62,6 +64,10 @@ export default function Home() {
     if (confirm('Are you sure you want to logout?')) {
       await logout()
     }
+  }
+
+  const handleExportContacts = () => {
+    setShowExportModal(true)
   }
 
   useEffect(() => {
@@ -107,6 +113,17 @@ export default function Home() {
                     />
                   </div>
               
+                  {/* Export Button */}
+                  <div className="mb-6">
+                    <button
+                      onClick={handleExportContacts}
+                      className="bg-green-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-green-700 transition-colors flex items-center gap-2"
+                    >
+                      <span>⬇</span>
+                      Exportar CSV
+                    </button>
+                  </div>
+
                   {/* Add Contact Button */}
                   <div className="mb-6">
                     <SecretTooltip>
@@ -171,6 +188,11 @@ export default function Home() {
         onSave={handleSaveContact}
         contact={editingContact}
         loading={loading}
+      />
+
+      <ExportModal
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
       />
     </ProtectedRoute>
   )
