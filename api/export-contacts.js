@@ -1,5 +1,7 @@
 // Real CSV export endpoint using Supabase data
+import { Resend } from 'resend'
 import { createAuthenticatedClient } from './_shared/supabase.js'
+import { generateEmailTemplate, generateEmailSubject } from './_shared/email-template.js'
 export default async function handler(req, res) {
   // Add CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -70,16 +72,48 @@ export default async function handler(req, res) {
   const { email } = req.query
 
   if (email) {
-    // Mock email sending (implement real email later)
-    console.log(`Mock: Sending CSV to ${email}`)
-    await new Promise((resolve) => setTimeout(resolve, 200))
-
-    return res.status(200).json({
-      success: true,
-      message: `Export sent to ${email} successfully! 📧`,
-      timestamp: new Date().toISOString(),
-      contactCount: contacts.length
-    })
+    try {
+      console.log(`📧 Sending CSV to ${email}`)
+      
+      // Initialize Resend client
+      const resend = new Resend(process.env.RESEND_API_KEY)
+      
+      // Create CSV buffer for attachment
+      const csvBuffer = Buffer.from(realCSV, 'utf-8')
+      const filename = `contacts-export-${new Date().toISOString().split('T')[0]}.csv`
+      
+      // Send email with attachment
+      const emailResult = await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL,
+        to: email,
+        subject: generateEmailSubject(contacts.length),
+        html: generateEmailTemplate(contacts.length, new Date().toISOString()),
+        attachments: [
+          {
+            filename: filename,
+            content: csvBuffer,
+            type: 'text/csv'
+          }
+        ]
+      })
+      
+      console.log('✅ Email sent successfully:', emailResult.data?.id)
+      
+      return res.status(200).json({
+        success: true,
+        message: `Export sent to ${email} successfully! 📧`,
+        timestamp: new Date().toISOString(),
+        contactCount: contacts.length,
+        emailId: emailResult.data?.id
+      })
+      
+    } catch (emailError) {
+      console.error('❌ Email sending failed:', emailError)
+      return res.status(500).json({
+        error: 'Failed to send email',
+        message: 'Falha ao enviar email. Verifique o endereço e tente novamente.'
+      })
+    }
   } else {
     const timestamp = new Date().toISOString().split('T')[0]
     const filename = `contacts-export-${timestamp}.csv`
