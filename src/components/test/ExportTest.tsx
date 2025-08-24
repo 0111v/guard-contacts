@@ -18,7 +18,7 @@ export function ExportTest() {
       const result = await exportService.warmUpServer()
       setIsReady(result.isReady)
       setWarmUpMessage(result.message)
-    } catch (error) {
+    } catch {
       setWarmUpMessage('Failed to warm up server')
     } finally {
       setIsWarming(false)
@@ -120,8 +120,8 @@ export function ExportTest() {
       <div className="mt-6 text-sm text-gray-600">
         <p><strong>Test Steps:</strong></p>
         <ol className="list-decimal list-inside space-y-1 mt-2">
-          <li>Click "Warm Up Server" and measure time</li>
-          <li>Click "Download CSV" (should be fast if warmed)</li>
+          <li>Click &quot;Warm Up Server&quot; and measure time</li>
+          <li>Click &quot;Download CSV&quot; (should be fast if warmed)</li>
           <li>Try email export with your email</li>
           <li>Open browser dev tools to see console logs</li>
         </ol>

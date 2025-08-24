@@ -36,7 +36,7 @@ export default function TestExportPage() {
                 <li>• CORS errors in console</li>
                 <li>• Failed to download CSV</li>
                 <li>• Functions timeout</li>
-                <li>• Email export doesn't respond</li>
+                <li>• Email export doesn&apos;t respond</li>
               </ul>
             </div>
           </div>
