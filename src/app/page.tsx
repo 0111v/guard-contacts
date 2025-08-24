@@ -117,7 +117,7 @@ export default function Home() {
                   <div className="mb-6">
                     <button
                       onClick={handleExportContacts}
-                      className="bg-green-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-green-700 transition-colors flex items-center gap-2"
+                      className="bg-green-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-green-700 transition-colors flex items-center gap-2 cursor-pointer"
                     >
                       <span>⬇</span>
                       Exportar CSV
@@ -129,7 +129,7 @@ export default function Home() {
                     <SecretTooltip>
                       <button
                         onClick={handleAddContact}
-                        className="bg-background-tertiary text-white px-6 py-3 rounded-xl font-medium hover:bg-accent/90 transition-colors flex items-center gap-2"
+                        className="bg-background-tertiary text-white px-6 py-3 rounded-xl font-medium hover:bg-accent/90 transition-colors flex items-center gap-2 cursor-pointer"
                       >
                         <span>+</span>
                         Adicionar Contato

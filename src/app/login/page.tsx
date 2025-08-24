@@ -93,7 +93,7 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={toggleMode}
-            className="text-accent-brand hover:text-accent-brand/85 text-text-medium"
+            className="text-accent-brand hover:text-accent-brand/85 text-text-medium cursor-pointer"
           >
             {isRegister 
               ? 'Acessar conta' 
@@ -225,7 +225,7 @@ export default function LoginPage() {
                 type="submit"
                 onClick={() => setHasAttemptedSubmit(true)}
                 disabled={loading || !email.trim() || !password.trim() || (isRegister && (!name.trim() || !isPasswordLongEnough || !hasNumberOrSymbol || !passwordsMatch))}
-                className="flex justify-center py-3 px-4 border border-transparent text-text-medium font-medium rounded-lg text-background-primary bg-accent-brand hover:brightness-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-brand disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="flex justify-center py-3 px-4 border border-transparent text-text-medium font-medium rounded-lg text-background-primary bg-accent-brand hover:brightness-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-brand disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
               >
                 {loading ? 'Carregando...' : isRegister ? 'Criar conta' : 'Acessar conta'}
               </button>

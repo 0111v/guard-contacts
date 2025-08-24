@@ -30,7 +30,7 @@ export function Sidebar({ user, onLogout }: SidebarProps) {
         <div className="bg-background-secondary rounded-xl">
         <button
           onClick={onLogout}
-          className="flex items-center justify-center w-12 h-12 text-content-primary rounded text-xs"
+          className="flex items-center justify-center w-12 h-12 text-content-primary rounded text-xs cursor-pointer"
           title="Logout"
         >
           <LogoutIcon className='w-7 h-7 text-content-muted'/>
