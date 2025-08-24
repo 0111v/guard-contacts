@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   }
 
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' })
+    return res.status(405).json({ error: 'Método não permitido' })
   }
 
   const authHeader = req.headers.authorization || ''
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
 
     if (error) {
       console.error('Supabase error:', error)
-      return res.status(500).json({ error: 'Failed to fetch contacts' })
+      return res.status(500).json({ error: 'Falha ao buscar contatos' })
     }
 
     if (!contacts || contacts.length === 0) {
@@ -65,7 +65,7 @@ export default async function handler(req, res) {
     console.log(`Generated CSV with ${contacts.length} contacts`)
   } catch (serverError) {
     console.error('Server error:', serverError)
-    return res.status(500).json({ error: 'Internal server error' })
+    return res.status(500).json({ error: 'Erro interno do servidor' })
   }
 
   // Check if user wants email delivery
@@ -110,7 +110,7 @@ export default async function handler(req, res) {
     } catch (emailError) {
       console.error('❌ Email sending failed:', emailError)
       return res.status(500).json({
-        error: 'Failed to send email',
+        error: 'Falha ao enviar email',
         message: 'Falha ao enviar email. Verifique o endereço e tente novamente.'
       })
     }

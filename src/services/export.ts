@@ -27,7 +27,7 @@ export const exportService = {
       console.error('❌ Failed to warm up server:', error)
       return {
         isReady: false,
-        message: 'Failed to connect to export server'
+        message: 'Falha ao conectar com o servidor de exportação'
       }
     }
   },

@@ -56,12 +56,12 @@ export default function Home() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this contact?')) return
+    if (!confirm('Tem certeza que deseja excluir este contato?')) return
     await removeContact(id)
   }
 
   const handleLogout = async () => {
-    if (confirm('Are you sure you want to logout?')) {
+    if (confirm('Tem certeza que deseja sair?')) {
       await logout()
     }
   }
